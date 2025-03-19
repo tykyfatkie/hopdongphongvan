@@ -7,7 +7,7 @@
     <!-- FontAwesome Icons -->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
     <style>
-        @import url('https://fonts.googleapis.com/css2?family=Roboto:wght@300;400;500;700&display=swap');
+        @import url('https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap');
         
         :root {
             --primary-color: #4361ee;
@@ -24,7 +24,7 @@
         }
 
         body {
-            font-family: 'Roboto', Arial, sans-serif;
+            font-family: 'Poppins', Arial, sans-serif;
             display: flex;
             flex-direction: column;
             align-items: center;
@@ -58,6 +58,23 @@
             background: var(--gradient-bg);
         }
 
+        .icon-container {
+            background-color: rgba(67, 97, 238, 0.1);
+            width: 80px;
+            height: 80px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin: 0 auto 1.5rem;
+            border: 2px solid var(--primary-light);
+        }
+
+        .icon {
+            font-size: 2.5rem;
+            color: var(--primary-color);
+        }
+
         h1 {
             color: var(--secondary-color);
             margin-bottom: 1rem;
@@ -87,9 +104,9 @@
         .slider {
             -webkit-appearance: none;
             width: 100%;
-            height: 10px;
-            border-radius: 5px;
-            background: #d3d3d3;
+            height: 12px;
+            border-radius: 6px;
+            background: #e0e0e0;
             outline: none;
             cursor: pointer;
         }
@@ -97,8 +114,8 @@
         .slider::-webkit-slider-thumb {
             -webkit-appearance: none;
             appearance: none;
-            width: 25px;
-            height: 25px;
+            width: 28px;
+            height: 28px;
             border-radius: 50%;
             background: var(--primary-color);
             cursor: pointer;
@@ -108,11 +125,12 @@
 
         .slider::-webkit-slider-thumb:hover {
             background: var(--primary-light);
+            transform: scale(1.1);
         }
 
         .slider::-moz-range-thumb {
-            width: 25px;
-            height: 25px;
+            width: 28px;
+            height: 28px;
             border-radius: 50%;
             background: var(--primary-color);
             cursor: pointer;
@@ -122,6 +140,7 @@
 
         .slider::-moz-range-thumb:hover {
             background: var(--primary-light);
+            transform: scale(1.1);
         }
 
         .slider-labels {
@@ -130,6 +149,7 @@
             margin-top: 10px;
             color: var(--gray-color);
             font-size: 0.9rem;
+            font-weight: 500;
         }
 
         .pen {
@@ -141,18 +161,28 @@
             filter: drop-shadow(0 2px 3px rgba(0,0,0,0.2));
         }
 
+        .card {
+            background-color: var(--light-color);
+            border-radius: 15px;
+            padding: 1.5rem;
+            margin: 1.5rem 0;
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.05);
+            transition: all 0.3s ease;
+        }
+
         .contract-card {
             background-color: var(--light-color);
-            border-radius: 12px;
-            padding: 1.2rem;
+            border-radius: 15px;
+            padding: 1.5rem;
             margin: 1.5rem 0;
-            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.05);
-            transition: transform 0.3s, box-shadow 0.3s;
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.05);
+            transition: all 0.3s ease;
+            border-left: 4px solid var(--gray-color);
         }
 
         .contract-card.signed {
             background-color: rgba(74, 222, 128, 0.1);
-            border: 1px solid var(--success-color);
+            border-left: 4px solid var(--success-color);
         }
 
         .contract {
@@ -165,7 +195,7 @@
         }
 
         .contract-icon {
-            font-size: 1.8rem;
+            font-size: 2rem;
             color: var(--gray-color);
             transition: color 0.3s;
         }
@@ -177,65 +207,72 @@
         .signed-text {
             color: var(--success-color);
             font-weight: 600;
-            margin-top: 0.5rem;
+            margin-top: 0.8rem;
             display: none;
         }
 
         .salary-value-container {
             margin-top: 1.5rem;
-            padding: 1rem;
-            border-radius: 12px;
+            padding: 1.5rem;
+            border-radius: 15px;
             background-color: rgba(67, 97, 238, 0.05);
-            border: 1px solid var(--primary-light);
+            border: 2px solid var(--primary-light);
+            box-shadow: 0 4px 10px rgba(67, 97, 238, 0.1);
         }
 
         .salary-value {
-            font-size: 1.6rem;
+            font-size: 2rem;
             font-weight: 700;
             color: var(--primary-color);
             margin: 0;
+            text-shadow: 0 1px 2px rgba(0, 0, 0, 0.1);
         }
 
         .salary-label {
             font-size: 1rem;
             color: var(--gray-color);
             margin-bottom: 0.5rem;
+            font-weight: 500;
         }
 
         .btn {
             display: inline-block;
-            padding: 12px 24px;
+            padding: 15px 30px;
             margin-top: 1.5rem;
-            border-radius: 8px;
+            border-radius: 10px;
             background-color: var(--primary-color);
             color: white;
             border: none;
             font-size: 1.1rem;
-            font-weight: 500;
+            font-weight: 600;
             cursor: pointer;
-            transition: background-color 0.3s, transform 0.2s;
-            box-shadow: 0 4px 6px rgba(67, 97, 238, 0.3);
+            transition: all 0.3s ease;
+            box-shadow: 0 4px 10px rgba(67, 97, 238, 0.25);
+            font-family: 'Poppins', Arial, sans-serif;
         }
 
         .btn:hover {
             background-color: var(--secondary-color);
             transform: translateY(-2px);
+            box-shadow: 0 6px 15px rgba(67, 97, 238, 0.35);
         }
 
         .btn:active {
             transform: translateY(0);
+            box-shadow: 0 2px 5px rgba(67, 97, 238, 0.25);
         }
 
         .btn-secondary {
             background-color: var(--light-color);
             color: var(--dark-color);
-            border: 1px solid var(--gray-color);
-            margin-right: 10px;
+            border: 2px solid var(--gray-color);
+            margin-right: 15px;
             box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
         }
 
         .btn-secondary:hover {
             background-color: #e9ecef;
+            border-color: var(--dark-color);
         }
 
         .btn.disabled {
@@ -258,15 +295,35 @@
         }
 
         .contract-note {
+            display: flex;
+            align-items: center;
+            justify-content: center;
             color: var(--danger-color);
-            font-size: 0.9rem;
+            font-size: 0.95rem;
             margin-top: 1rem;
+            padding: 0.8rem;
+            border-radius: 8px;
+            background-color: rgba(239, 71, 111, 0.1);
+            border: 1px solid var(--danger-color);
             display: none;
+        }
+
+        .contract-note i {
+            margin-right: 8px;
+        }
+
+        .animated {
+            animation: fadeIn 0.5s ease-out;
+        }
+
+        @keyframes fadeIn {
+            0% { opacity: 0; transform: translateY(10px); }
+            100% { opacity: 1; transform: translateY(0); }
         }
 
         @media (max-width: 600px) {
             .container {
-                padding: 1.5rem;
+                padding: 2rem 1.5rem;
             }
             
             h1 {
@@ -274,13 +331,25 @@
             }
             
             .salary-value {
-                font-size: 1.4rem;
+                font-size: 1.6rem;
+            }
+            
+            .actions {
+                flex-direction: column;
+            }
+            
+            .btn-secondary {
+                margin-right: 0;
+                margin-bottom: 10px;
             }
         }
     </style>
 </head>
 <body>
-    <div class="container">
+    <div class="container animated">
+        <div class="icon-container">
+            <i class="fas fa-coins icon"></i>
+        </div>
         <h1>Ứng tuyển việc làm</h1>
         <p class="user-greeting" id="userGreeting">Chào mừng bạn đến với phần mức lương!</p>
         <p class="instruction">Vui lòng đề xuất mức lương mong muốn bằng cách kéo thanh trượt bên dưới</p>
@@ -307,7 +376,10 @@
             <p class="salary-value" id="salaryValue">1,200,000đ</p>
         </div>
         
-        <p class="contract-note" id="contractNote">Bạn cần ký hợp đồng trước khi tiếp tục</p>
+        <div class="contract-note" id="contractNote">
+            <i class="fas fa-exclamation-circle"></i>
+            Bạn cần ký hợp đồng trước khi tiếp tục
+        </div>
         
         <div class="actions">
             <button class="btn btn-secondary" id="resetBtn">
@@ -321,7 +393,7 @@
 
     <script>
         document.addEventListener('DOMContentLoaded', function() {
-            // Lấy tên từ localStorage thay vì từ URL
+            // Lấy tên từ localStorage
             const selectedGender = localStorage.getItem('selectedGender');
             const name = localStorage.getItem('userName');
             
@@ -352,7 +424,7 @@
                     contractNote.style.display = 'none';
                 } else {
                     continueBtn.classList.add('disabled');
-                    contractNote.style.display = 'block';
+                    contractNote.style.display = 'flex';
                 }
             }
 
@@ -416,7 +488,7 @@
                     window.location.href = 'intern.html';
                 } else {
                     // Hiển thị thông báo nếu hợp đồng chưa được ký
-                    contractNote.style.display = 'block';
+                    contractNote.style.display = 'flex';
                 }
             });
         });

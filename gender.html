@@ -14,7 +14,7 @@
             justify-content: center;
             height: 100vh;
             margin: 0;
-            background: linear-gradient(135deg, #f5f7fa, #c3cfe2);
+            background: url('./background2.jpg') no-repeat center center/cover;
         }
 
         .container {
@@ -82,7 +82,7 @@
 <body>
     <div class="container">
         <div class="icon">
-            <i class="fas fa-user"></i> <!-- Icon người dùng -->
+            <i class="fas fa-user"></i>
         </div>
         <h1>Chọn Giới Tính</h1>
         <p id="nameDisplay"></p>
@@ -98,7 +98,6 @@
     </div>
 
     <script>
-        // Lấy tên từ URL và hiển thị nó
         const urlParams = new URLSearchParams(window.location.search);
         const name = urlParams.get('name');
         if (name) {
@@ -122,7 +121,6 @@
                     errorMessage.style.display = 'block';
                     return;
                 } else if (gender === 'other') {
-                    // Chỉ lưu giới tính và chuyển trang khi chọn "Khác"
                     errorMessage.style.display = 'none';
                     localStorage.setItem('selectedGender', gender);
                     window.location.href = 'salary.html';

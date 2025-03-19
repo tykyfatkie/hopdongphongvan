@@ -6,76 +6,198 @@
     <title>Ứng Tuyển Vị Trí Thực Tập Sinh</title>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
     <style>
+        @import url('https://fonts.googleapis.com/css2?family=Roboto:wght@300;400;500;700&display=swap');
+        
+        :root {
+            --primary-color: #3a86ff;
+            --secondary-color: #4361ee;
+            --accent-color: #7209b7;
+            --success-color: #38b000;
+            --warning-color: #ff9e00;
+            --danger-color: #d90429;
+            --light-color: #f8f9fa;
+            --dark-color: #212529;
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
         body {
-            font-family: Arial, sans-serif;
+            font-family: 'Roboto', sans-serif;
             display: flex;
             flex-direction: column;
             align-items: center;
             justify-content: center;
-            height: 100vh;
+            min-height: 100vh;
             margin: 0;
-            background: linear-gradient(135deg, #f5f7fa, #c3cfe2);
+            background-image: url('./background4.jpg');
+            background-size: cover;
+            background-position: center;
+            background-repeat: no-repeat;
+            color: var(--dark-color);
+            padding: 20px;
         }
 
         .container {
             text-align: center;
-            background-color: white;
-            padding: 2rem;
-            border-radius: 15px;
-            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
-            max-width: 400px;
+            background-color: rgba(255, 255, 255, 0.92);
+            padding: 2.5rem;
+            border-radius: 18px;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.18);
+            max-width: 450px;
             width: 100%;
+            position: relative;
+            overflow: hidden;
+            backdrop-filter: blur(5px);
+        }
+
+        .container::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 6px;
+            background: linear-gradient(90deg, var(--primary-color), var(--accent-color));
+        }
+
+        .icon-container {
+            background-color: rgba(58, 134, 255, 0.1);
+            width: 80px;
+            height: 80px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin: 0 auto 1.5rem;
+            border: 2px solid rgba(58, 134, 255, 0.3);
+        }
+
+        .icon {
+            font-size: 2.2rem;
+            color: var(--primary-color);
         }
 
         h1 {
-            color: #333;
+            color: var(--dark-color);
+            margin-bottom: 0.8rem;
+            font-weight: 700;
+            font-size: 1.8rem;
+        }
+
+        p {
+            color: #555;
             margin-bottom: 1.5rem;
+            font-size: 0.95rem;
         }
 
         .criteria {
             display: flex;
             flex-direction: column;
-            gap: 1rem;
+            gap: 1.2rem;
             text-align: left;
+            margin-bottom: 1.5rem;
         }
 
         .criteria label {
             display: flex;
             align-items: center;
-            gap: 0.5rem;
+            gap: 0.8rem;
             font-size: 1rem;
+            cursor: pointer;
+            padding: 0.6rem 1rem;
+            border-radius: 8px;
+            background-color: #f0f4f8;
+            transition: all 0.2s ease;
+        }
+
+        .criteria label:hover {
+            background-color: #e6eef8;
+            transform: translateY(-2px);
+        }
+
+        .criteria input[type="checkbox"] {
+            width: 18px;
+            height: 18px;
+            accent-color: var(--primary-color);
         }
 
         .notification {
-            margin-top: 1.5rem;
-            color: #dc3545;
-            font-weight: bold;
+            margin: 1rem 0;
+            color: var(--danger-color);
+            font-weight: 500;
             display: none;
+            padding: 0.8rem;
+            border-radius: 8px;
+            background-color: rgba(217, 4, 41, 0.1);
+            border-left: 4px solid var(--danger-color);
+        }
+
+        .notification i {
+            margin-right: 6px;
         }
 
         .apply-button {
             display: block;
             width: 100%;
-            margin-top: 1.5rem;
-            padding: 10px 20px;
-            background-color: #007bff;
+            margin-top: 1rem;
+            padding: 0.9rem 1.5rem;
+            background: linear-gradient(90deg, var(--primary-color), var(--secondary-color));
             color: white;
             border: none;
-            border-radius: 5px;
+            border-radius: 10px;
             cursor: pointer;
-            font-size: 1rem;
-            transition: background-color 0.3s ease;
+            font-size: 1.1rem;
+            font-weight: 600;
+            transition: all 0.3s ease;
+            box-shadow: 0 4px 10px rgba(67, 97, 238, 0.25);
         }
 
         .apply-button:hover {
-            background-color: #0056b3;
+            transform: translateY(-3px);
+            box-shadow: 0 6px 15px rgba(67, 97, 238, 0.35);
+        }
+
+        .apply-button:active {
+            transform: translateY(0);
+            box-shadow: 0 2px 5px rgba(67, 97, 238, 0.25);
+        }
+
+        .apply-button i {
+            margin-left: 8px;
+        }
+
+        .animated {
+            animation: fadeIn 0.6s ease-out;
+        }
+
+        @keyframes fadeIn {
+            0% { opacity: 0; transform: translateY(15px); }
+            100% { opacity: 1; transform: translateY(0); }
+        }
+
+        @media (max-width: 600px) {
+            .container {
+                padding: 2rem 1.5rem;
+            }
+            
+            h1 {
+                font-size: 1.5rem;
+            }
         }
     </style>
 </head>
 <body>
-    <div class="container">
-        <h1>Ứng tuyển vị trí</h1>
+    <div class="container animated">
+        <div class="icon-container">
+            <i class="fas fa-briefcase icon"></i>
+        </div>
+        <h1>Ứng Tuyển Vị Trí</h1>
         <p>Vui lòng chọn 1 trong các tiêu chí bạn có thể đáp ứng</p>
+        
         <div class="criteria">
             <label>
                 <input type="checkbox" id="unpaidInternship"> Bỏ phong bì đám cưới của Phát
@@ -87,26 +209,57 @@
                 <input type="checkbox" id="teamBuilding"> Tham gia team building cùng cty (chi phí cá nhân)
             </label>
         </div>
-        <p class="notification" id="notification">🔥 Vui lòng chọn ít nhất 3 tùy chọn...</p>
-        <button class="apply-button" id="applyButton">Ứng tuyển</button>
+        
+        <div class="notification" id="notification">
+            <i class="fas fa-exclamation-triangle"></i> Vui lòng chọn ít nhất 3 tùy chọn...
+        </div>
+        
+        <button class="apply-button" id="applyButton">
+            Ứng tuyển <i class="fas fa-paper-plane"></i>
+        </button>
     </div>
 
     <script>
-        const unpaidInternship = document.getElementById('unpaidInternship');
-        const ot = document.getElementById('ot');
-        const teamBuilding = document.getElementById('teamBuilding');
-        const notification = document.getElementById('notification');
-        const applyButton = document.getElementById('applyButton');
+        document.addEventListener('DOMContentLoaded', function() {
+            const unpaidInternship = document.getElementById('unpaidInternship');
+            const ot = document.getElementById('ot');
+            const teamBuilding = document.getElementById('teamBuilding');
+            const notification = document.getElementById('notification');
+            const applyButton = document.getElementById('applyButton');
 
-        applyButton.addEventListener('click', () => {
-            const selectedCount = [unpaidInternship, ot, teamBuilding].filter(checkbox => checkbox.checked).length;
+            const checkboxes = [unpaidInternship, ot, teamBuilding];
+            
+            // Add animation when checking options
+            checkboxes.forEach(checkbox => {
+                checkbox.addEventListener('change', function() {
+                    if (this.checked) {
+                        this.parentElement.style.backgroundColor = '#e6f0ff';
+                        this.parentElement.style.fontWeight = '500';
+                    } else {
+                        this.parentElement.style.backgroundColor = '#f0f4f8';
+                        this.parentElement.style.fontWeight = '400';
+                    }
+                });
+            });
 
-            if (selectedCount < 3) {
-                notification.style.display = 'block'; 
-            } else {
-                notification.style.display = 'none'; 
-                alert('Bạn đã ứng tuyển thành công!');
-            }
+            applyButton.addEventListener('click', () => {
+                const selectedCount = checkboxes.filter(checkbox => checkbox.checked).length;
+
+                if (selectedCount < 3) {
+                    notification.style.display = 'block';
+                    notification.classList.add('animated');
+                    setTimeout(() => notification.classList.remove('animated'), 600);
+                } else {
+                    notification.style.display = 'none';
+                    alert('Bạn đã ứng tuyển thành công!');
+                    // Reset checkboxes
+                    checkboxes.forEach(checkbox => {
+                        checkbox.checked = false;
+                        checkbox.parentElement.style.backgroundColor = '#f0f4f8';
+                        checkbox.parentElement.style.fontWeight = '400';
+                    });
+                }
+            });
         });
     </script>
 </body>
