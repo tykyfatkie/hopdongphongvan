@@ -7,133 +7,419 @@
     <!-- FontAwesome Icons -->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
     <style>
+        @import url('https://fonts.googleapis.com/css2?family=Roboto:wght@300;400;500;700&display=swap');
+        
+        :root {
+            --primary-color: #4361ee;
+            --primary-light: #7b99f2;
+            --secondary-color: #3f37c9;
+            --accent-color: #4cc9f0;
+            --success-color: #4ade80;
+            --warning-color: #fb8500;
+            --danger-color: #ef476f;
+            --light-color: #f8f9fa;
+            --dark-color: #212529;
+            --gray-color: #6c757d;
+            --gradient-bg: linear-gradient(135deg, #4361ee, #3a0ca3);
+        }
+
         body {
-            font-family: Arial, sans-serif;
+            font-family: 'Roboto', Arial, sans-serif;
             display: flex;
             flex-direction: column;
             align-items: center;
             justify-content: center;
-            height: 100vh;
+            min-height: 100vh;
             margin: 0;
-            background: linear-gradient(135deg, #f5f7fa, #c3cfe2);
+            background: var(--gradient-bg);
+            color: var(--dark-color);
+            padding: 20px;
         }
 
         .container {
             text-align: center;
             background-color: white;
-            padding: 2rem;
-            border-radius: 15px;
-            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
-            max-width: 500px;
+            padding: 2.5rem;
+            border-radius: 20px;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.15);
+            max-width: 550px;
             width: 100%;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .container::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 8px;
+            background: var(--gradient-bg);
         }
 
         h1 {
-            color: #333;
+            color: var(--secondary-color);
             margin-bottom: 1rem;
+            font-weight: 700;
+            font-size: 1.8rem;
+        }
+
+        .user-greeting {
+            color: var(--primary-color);
+            font-weight: 500;
+            margin-bottom: 2rem;
+            font-size: 1.2rem;
+        }
+
+        .instruction {
+            color: var(--gray-color);
+            margin-bottom: 1.5rem;
+            font-size: 1.1rem;
         }
 
         .slider-container {
             position: relative;
-            width: 80%;
-            margin: 2rem 0;
+            width: 85%;
+            margin: 3rem auto;
         }
 
         .slider {
+            -webkit-appearance: none;
             width: 100%;
+            height: 10px;
+            border-radius: 5px;
+            background: #d3d3d3;
+            outline: none;
             cursor: pointer;
+        }
+
+        .slider::-webkit-slider-thumb {
+            -webkit-appearance: none;
+            appearance: none;
+            width: 25px;
+            height: 25px;
+            border-radius: 50%;
+            background: var(--primary-color);
+            cursor: pointer;
+            box-shadow: 0 0 5px rgba(0, 0, 0, 0.2);
+            transition: background 0.3s;
+        }
+
+        .slider::-webkit-slider-thumb:hover {
+            background: var(--primary-light);
+        }
+
+        .slider::-moz-range-thumb {
+            width: 25px;
+            height: 25px;
+            border-radius: 50%;
+            background: var(--primary-color);
+            cursor: pointer;
+            box-shadow: 0 0 5px rgba(0, 0, 0, 0.2);
+            transition: background 0.3s;
+        }
+
+        .slider::-moz-range-thumb:hover {
+            background: var(--primary-light);
+        }
+
+        .slider-labels {
+            display: flex;
+            justify-content: space-between;
+            margin-top: 10px;
+            color: var(--gray-color);
+            font-size: 0.9rem;
         }
 
         .pen {
             position: absolute;
-            top: -30px;
+            top: -35px;
             right: 0;
-            font-size: 24px;
-            transition: right 0.1s linear; /* Di chuyển nhanh và không delay */
+            font-size: 28px;
+            transition: right 0.1s linear;
+            filter: drop-shadow(0 2px 3px rgba(0,0,0,0.2));
+        }
+
+        .contract-card {
+            background-color: var(--light-color);
+            border-radius: 12px;
+            padding: 1.2rem;
+            margin: 1.5rem 0;
+            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.05);
+            transition: transform 0.3s, box-shadow 0.3s;
+        }
+
+        .contract-card.signed {
+            background-color: rgba(74, 222, 128, 0.1);
+            border: 1px solid var(--success-color);
         }
 
         .contract {
-            margin-top: 1.5rem;
-            font-size: 1.2rem;
-            color: #6c757d;
             display: flex;
             align-items: center;
             justify-content: center;
-            gap: 10px;
+            gap: 15px;
+            font-size: 1.1rem;
+            color: var(--gray-color);
         }
 
         .contract-icon {
-            font-size: 1.5rem;
-            color: #28a745;
+            font-size: 1.8rem;
+            color: var(--gray-color);
+            transition: color 0.3s;
         }
 
-        .signed {
-            color: #28a745;
-            font-weight: bold;
+        .contract-icon.signed {
+            color: var(--success-color);
+        }
+
+        .signed-text {
+            color: var(--success-color);
+            font-weight: 600;
+            margin-top: 0.5rem;
             display: none;
         }
 
+        .salary-value-container {
+            margin-top: 1.5rem;
+            padding: 1rem;
+            border-radius: 12px;
+            background-color: rgba(67, 97, 238, 0.05);
+            border: 1px solid var(--primary-light);
+        }
+
         .salary-value {
-            font-size: 1.5rem;
-            font-weight: bold;
-            color: #007bff;
+            font-size: 1.6rem;
+            font-weight: 700;
+            color: var(--primary-color);
+            margin: 0;
+        }
+
+        .salary-label {
+            font-size: 1rem;
+            color: var(--gray-color);
+            margin-bottom: 0.5rem;
+        }
+
+        .btn {
+            display: inline-block;
+            padding: 12px 24px;
+            margin-top: 1.5rem;
+            border-radius: 8px;
+            background-color: var(--primary-color);
+            color: white;
+            border: none;
+            font-size: 1.1rem;
+            font-weight: 500;
+            cursor: pointer;
+            transition: background-color 0.3s, transform 0.2s;
+            box-shadow: 0 4px 6px rgba(67, 97, 238, 0.3);
+        }
+
+        .btn:hover {
+            background-color: var(--secondary-color);
+            transform: translateY(-2px);
+        }
+
+        .btn:active {
+            transform: translateY(0);
+        }
+
+        .btn-secondary {
+            background-color: var(--light-color);
+            color: var(--dark-color);
+            border: 1px solid var(--gray-color);
+            margin-right: 10px;
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+        }
+
+        .btn-secondary:hover {
+            background-color: #e9ecef;
+        }
+
+        .btn.disabled {
+            background-color: var(--gray-color);
+            cursor: not-allowed;
+            opacity: 0.6;
+            box-shadow: none;
+        }
+
+        .btn.disabled:hover {
+            transform: none;
+            background-color: var(--gray-color);
+        }
+
+        .actions {
+            margin-top: 2rem;
+            display: flex;
+            justify-content: center;
+            gap: 15px;
+        }
+
+        .contract-note {
+            color: var(--danger-color);
+            font-size: 0.9rem;
             margin-top: 1rem;
+            display: none;
+        }
+
+        @media (max-width: 600px) {
+            .container {
+                padding: 1.5rem;
+            }
+            
+            h1 {
+                font-size: 1.5rem;
+            }
+            
+            .salary-value {
+                font-size: 1.4rem;
+            }
         }
     </style>
 </head>
 <body>
     <div class="container">
-        <h1 id="pageTitle">Ứng tuyển việc làm</h1>
-        <p>Vui lòng đề xuất mức lương mong muốn</p>
+        <h1>Ứng tuyển việc làm</h1>
+        <p class="user-greeting" id="userGreeting">Chào mừng bạn đến với phần mức lương!</p>
+        <p class="instruction">Vui lòng đề xuất mức lương mong muốn bằng cách kéo thanh trượt bên dưới</p>
+        
         <div class="slider-container">
             <input type="range" min="0" max="100" value="0" class="slider" id="salarySlider">
             <div class="pen" id="pen">✒️</div>
+            <div class="slider-labels">
+                <span>1,200,000đ</span>
+                <span>30,000,000đ</span>
+            </div>
         </div>
-        <div class="contract">
-            <i class="fas fa-file-contract contract-icon" id="contractIcon"></i> <!-- Icon hợp đồng -->
-            <p>Hộp đồng - <span id="contractStatus">Chưa được ký</span></p>
+        
+        <div class="contract-card" id="contractCard">
+            <div class="contract">
+                <i class="fas fa-file-contract contract-icon" id="contractIcon"></i>
+                <p>Hợp đồng - <span id="contractStatus">Chưa được ký</span></p>
+            </div>
+            <p class="signed-text" id="signedText">Hợp đồng đã được ký thành công!</p>
         </div>
-        <p class="signed" id="signedText">Hợp đồng đã được ký</p>
-        <p class="salary-value">Mức lương mong muốn: <span id="salaryValue">1,200,000đ</span></p>
+        
+        <div class="salary-value-container">
+            <p class="salary-label">Mức lương mong muốn:</p>
+            <p class="salary-value" id="salaryValue">1,200,000đ</p>
+        </div>
+        
+        <p class="contract-note" id="contractNote">Bạn cần ký hợp đồng trước khi tiếp tục</p>
+        
+        <div class="actions">
+            <button class="btn btn-secondary" id="resetBtn">
+                <i class="fas fa-undo"></i> Đặt lại
+            </button>
+            <button class="btn disabled" id="continueBtn">
+                Tiếp tục <i class="fas fa-arrow-right"></i>
+            </button>
+        </div>
     </div>
 
     <script>
-        const urlParams = new URLSearchParams(window.location.search);
-        const name = urlParams.get('name');
-        if (name) {
-            document.getElementById('pageTitle').textContent += ` - ${name}`;
-        }
-
-        const slider = document.getElementById('salarySlider');
-        const pen = document.getElementById('pen');
-        const salaryValue = document.getElementById('salaryValue');
-        const contractStatus = document.getElementById('contractStatus');
-        const signedText = document.getElementById('signedText');
-        const contractIcon = document.getElementById('contractIcon');
-
-        // Phạm vi lương: 1,200,000đ đến 30,000,000đ
-        const minSalary = 1200000;
-        const maxSalary = 30000000;
-
-        slider.oninput = function() {
-            const value = this.value;
-            const penPosition = (100 - value) * (slider.offsetWidth / 100);
-            pen.style.right = `${penPosition}px`;
-
-            // Tính toán mức lương dựa trên giá trị thanh trượt
-            const salary = minSalary + (value / 100) * (maxSalary - minSalary);
-            salaryValue.textContent = `${salary.toLocaleString()}đ`;
-
-            if (value < 10) {
-                contractStatus.textContent = "Đã được ký";
-                signedText.style.display = "block";
-                contractIcon.style.color = "#28a745"; // Đổi màu icon hợp đồng
-            } else {
-                contractStatus.textContent = "Chưa được ký";
-                signedText.style.display = "none";
-                contractIcon.style.color = "#6c757d"; // Đổi màu icon hợp đồng
+        document.addEventListener('DOMContentLoaded', function() {
+            // Lấy tên từ localStorage thay vì từ URL
+            const selectedGender = localStorage.getItem('selectedGender');
+            const name = localStorage.getItem('userName');
+            
+            // Hiển thị tên nếu có
+            if (name) {
+                document.getElementById('userGreeting').textContent = `Chào bạn, ${name}! Vui lòng chọn mức lương mong muốn.`;
             }
-        };
+
+            const slider = document.getElementById('salarySlider');
+            const pen = document.getElementById('pen');
+            const salaryValue = document.getElementById('salaryValue');
+            const contractStatus = document.getElementById('contractStatus');
+            const signedText = document.getElementById('signedText');
+            const contractIcon = document.getElementById('contractIcon');
+            const contractCard = document.getElementById('contractCard');
+            const resetBtn = document.getElementById('resetBtn');
+            const continueBtn = document.getElementById('continueBtn');
+            const contractNote = document.getElementById('contractNote');
+
+            // Phạm vi lương: 1,200,000đ đến 30,000,000đ
+            const minSalary = 1200000;
+            const maxSalary = 30000000;
+
+            // Cập nhật trạng thái nút Tiếp tục
+            function updateContinueButtonState(isContractSigned) {
+                if (isContractSigned) {
+                    continueBtn.classList.remove('disabled');
+                    contractNote.style.display = 'none';
+                } else {
+                    continueBtn.classList.add('disabled');
+                    contractNote.style.display = 'block';
+                }
+            }
+
+            // Khởi tạo trạng thái ban đầu
+            updateContinueButtonState(false);
+
+            // Xử lý sự kiện khi người dùng kéo thanh trượt
+            slider.oninput = function() {
+                const value = this.value;
+                updateSalaryUI(value);
+            };
+
+            // Cập nhật giao diện dựa trên giá trị thanh trượt
+            function updateSalaryUI(value) {
+                // Tính vị trí của bút
+                const penPosition = (100 - value) * (slider.offsetWidth / 100);
+                pen.style.right = `${penPosition}px`;
+
+                // Tính toán mức lương dựa trên giá trị thanh trượt
+                const salary = minSalary + (value / 100) * (maxSalary - minSalary);
+                salaryValue.textContent = `${salary.toLocaleString()}đ`;
+
+                // Cập nhật trạng thái hợp đồng
+                const isContractSigned = value < 10;
+                
+                if (isContractSigned) {
+                    contractStatus.textContent = "Đã được ký";
+                    signedText.style.display = "block";
+                    contractIcon.style.color = "#4ade80";
+                    contractIcon.classList.add("signed");
+                    contractCard.classList.add("signed");
+                } else {
+                    contractStatus.textContent = "Chưa được ký";
+                    signedText.style.display = "none";
+                    contractIcon.style.color = "#6c757d";
+                    contractIcon.classList.remove("signed");
+                    contractCard.classList.remove("signed");
+                }
+                
+                // Cập nhật trạng thái nút Tiếp tục
+                updateContinueButtonState(isContractSigned);
+            }
+
+            // Xử lý nút đặt lại
+            resetBtn.addEventListener('click', function() {
+                slider.value = 0;
+                updateSalaryUI(0);
+            });
+
+            // Xử lý nút tiếp tục
+            continueBtn.addEventListener('click', function() {
+                // Kiểm tra xem hợp đồng đã được ký chưa
+                const isContractSigned = slider.value < 10;
+                
+                if (isContractSigned) {
+                    // Lưu mức lương vào localStorage
+                    const salary = minSalary + (slider.value / 100) * (maxSalary - minSalary);
+                    localStorage.setItem('selectedSalary', salary);
+                    
+                    // Chuyển đến trang intern.html
+                    window.location.href = 'intern.html';
+                } else {
+                    // Hiển thị thông báo nếu hợp đồng chưa được ký
+                    contractNote.style.display = 'block';
+                }
+            });
+        });
     </script>
 </body>
 </html>
