@@ -49,7 +49,7 @@
             top: -30px;
             right: 0;
             font-size: 24px;
-            transition: right 0.3s ease;
+            transition: right 0.1s linear; /* Di chuyển nhanh và không delay */
         }
 
         .contract {
@@ -83,10 +83,10 @@
 </head>
 <body>
     <div class="container">
-        <h1 id="pageTitle" style="color: #006eff;">Ứng tuyển việc làm</h1>
+        <h1 id="pageTitle">Ứng tuyển việc làm</h1>
         <p>Vui lòng đề xuất mức lương mong muốn</p>
         <div class="slider-container">
-            <input type="range" min="0" max="100" value="50" class="slider" id="salarySlider">
+            <input type="range" min="0" max="100" value="0" class="slider" id="salarySlider">
             <div class="pen" id="pen">✒️</div>
         </div>
         <div class="contract">
@@ -94,7 +94,7 @@
             <p>Hộp đồng - <span id="contractStatus">Chưa được ký</span></p>
         </div>
         <p class="signed" id="signedText">Hợp đồng đã được ký</p>
-        <p class="salary-value">Mức lương mong muốn: <span id="salaryValue">5,439,900đ</span></p>
+        <p class="salary-value">Mức lương mong muốn: <span id="salaryValue">1,200,000đ</span></p>
     </div>
 
     <script>
@@ -111,12 +111,17 @@
         const signedText = document.getElementById('signedText');
         const contractIcon = document.getElementById('contractIcon');
 
+        // Phạm vi lương: 1,200,000đ đến 30,000,000đ
+        const minSalary = 1200000;
+        const maxSalary = 30000000;
+
         slider.oninput = function() {
             const value = this.value;
             const penPosition = (100 - value) * (slider.offsetWidth / 100);
             pen.style.right = `${penPosition}px`;
 
-            const salary = 4800000 + (value * 35550);
+            // Tính toán mức lương dựa trên giá trị thanh trượt
+            const salary = minSalary + (value / 100) * (maxSalary - minSalary);
             salaryValue.textContent = `${salary.toLocaleString()}đ`;
 
             if (value < 10) {

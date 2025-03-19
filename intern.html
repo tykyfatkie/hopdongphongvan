@@ -1,0 +1,113 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Ứng Tuyển Vị Trí Thực Tập Sinh</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            height: 100vh;
+            margin: 0;
+            background: linear-gradient(135deg, #f5f7fa, #c3cfe2);
+        }
+
+        .container {
+            text-align: center;
+            background-color: white;
+            padding: 2rem;
+            border-radius: 15px;
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
+            max-width: 400px;
+            width: 100%;
+        }
+
+        h1 {
+            color: #333;
+            margin-bottom: 1.5rem;
+        }
+
+        .criteria {
+            display: flex;
+            flex-direction: column;
+            gap: 1rem;
+            text-align: left;
+        }
+
+        .criteria label {
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+            font-size: 1rem;
+        }
+
+        .notification {
+            margin-top: 1.5rem;
+            color: #dc3545;
+            font-weight: bold;
+            display: none;
+        }
+
+        .apply-button {
+            display: block;
+            width: 100%;
+            margin-top: 1.5rem;
+            padding: 10px 20px;
+            background-color: #007bff;
+            color: white;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            font-size: 1rem;
+            transition: background-color 0.3s ease;
+        }
+
+        .apply-button:hover {
+            background-color: #0056b3;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>Ứng tuyển vị trí</h1>
+        <p>Vui lòng chọn 1 trong các tiêu chí bạn có thể đáp ứng</p>
+        <div class="criteria">
+            <label>
+                <input type="checkbox" id="unpaidInternship"> Bỏ phong bì đám cưới của Phát
+            </label>
+            <label>
+                <input type="checkbox" id="ot"> OT
+            </label>
+            <label>
+                <input type="checkbox" id="teamBuilding"> Tham gia team building cùng cty (chi phí cá nhân)
+            </label>
+        </div>
+        <p class="notification" id="notification">🔥 Vui lòng chọn ít nhất 3 tùy chọn...</p>
+        <button class="apply-button" id="applyButton">Ứng tuyển</button>
+    </div>
+
+    <script>
+        const unpaidInternship = document.getElementById('unpaidInternship');
+        const ot = document.getElementById('ot');
+        const teamBuilding = document.getElementById('teamBuilding');
+        const notification = document.getElementById('notification');
+        const applyButton = document.getElementById('applyButton');
+
+        applyButton.addEventListener('click', () => {
+            const selectedCount = [unpaidInternship, ot, teamBuilding].filter(checkbox => checkbox.checked).length;
+
+            if (selectedCount < 3) {
+                notification.style.display = 'block'; 
+            } else {
+                notification.style.display = 'none'; 
+                alert('Bạn đã ứng tuyển thành công!');
+            }
+        });
+    </script>
+</body>
+</html>

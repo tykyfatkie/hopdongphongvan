@@ -72,14 +72,15 @@
         <h1>Nhập Tên Người Phỏng Vấn</h1>
         <h4 style="color: #006eff;">Người phỏng vấn: Nguyễn Tăng Tài Phát</h4>
         <input type="text" id="interviewerName" placeholder="Nhập tên của bạn">
-        <button onclick="goToSalaryPage()">Chuyển đến Trang Mức Lương</button>
+        <button onclick="goToGenderPage()">Tiếp tục</button>
     </div>
 
     <script>
-        function goToSalaryPage() {
+        function goToGenderPage() {
             const name = document.getElementById('interviewerName').value;
             if (name.trim() !== "") {
-                window.location.href = `salary.html?name=${encodeURIComponent(name)}`;
+                // Chuyển sang trang gender.html và truyền tên qua URL
+                window.location.href = `gender.html?name=${encodeURIComponent(name)}`;
             } else {
                 alert("Vui lòng nhập tên của bạn!");
             }
