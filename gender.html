@@ -104,33 +104,33 @@
         if (name) {
             document.getElementById('nameDisplay').innerText = `Chào bạn, ${name}! Hãy chọn giới tính của bạn.`;
         }
-
-        let selectedGender = localStorage.getItem('selectedGender');
         
         function goToSalaryPage() {
-    const selectedOption = document.querySelector('input[name="gender"]:checked');
-    const errorMessage = document.getElementById('errorMessage');
-    const errorText = document.getElementById('errorText');
+            const selectedOption = document.querySelector('input[name="gender"]:checked');
+            const errorMessage = document.getElementById('errorMessage');
+            const errorText = document.getElementById('errorText');
+            
+            if (selectedOption) {
+                const gender = selectedOption.value;
 
-    if (selectedOption) {
-        const gender = selectedOption.value;
-
-        if (selectedGender && (gender === 'male' || gender === 'female') && selectedGender === gender) {
-            errorText.textContent = `Đã có người chọn giới tính ${gender === 'male' ? 'Nam' : 'Nữ'} rồi, vui lòng chọn giới tính khác!`;
-            errorMessage.style.display = 'block';
-        } else if (gender === 'other') {
-            // Chỉ lưu vào localStorage khi chọn "Other"
-            localStorage.setItem('selectedGender', gender);
-            errorMessage.style.display = 'none';
-            window.location.href = 'salary.html'; // Chuyển trang
-        } else {
-            errorMessage.style.display = 'none';
-            alert('Bạn đã chọn giới tính thành công!');
+                if (gender === 'male') {
+                    errorText.textContent = "Đã có người chọn giới tính Nam rồi, vui lòng chọn giới tính khác!";
+                    errorMessage.style.display = 'block';
+                    return;
+                } else if (gender === 'female') {
+                    errorText.textContent = "Đã có người chọn giới tính Nữ rồi, vui lòng chọn giới tính khác!";
+                    errorMessage.style.display = 'block';
+                    return;
+                } else if (gender === 'other') {
+                    // Chỉ lưu giới tính và chuyển trang khi chọn "Khác"
+                    errorMessage.style.display = 'none';
+                    localStorage.setItem('selectedGender', gender);
+                    window.location.href = 'salary.html';
+                }
+            } else {
+                alert("Vui lòng chọn giới tính!");
+            }
         }
-    } else {
-        alert("Vui lòng chọn giới tính!");
-    }
-}
     </script>
 </body>
 </html>
