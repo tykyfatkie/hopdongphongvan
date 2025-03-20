@@ -40,7 +40,7 @@
 
         .container {
             text-align: center;
-            background-color: rgba(255, 255, 255, 0.9);
+            background-color: rgba(255, 255, 255, 0.493);
             padding: 2rem;
             border-radius: 20px;
             box-shadow: 0 10px 30px rgba(0, 0, 0, 0.15);
@@ -48,6 +48,8 @@
             width: 100%;
             position: relative;
             overflow: hidden;
+            backdrop-filter: blur(10px); /* Hiệu ứng làm mờ */
+            border: 1px solid rgba(255, 255, 255, 0.3); /* Viền mờ để tăng hiệu ứng thủy tinh */
         }
 
         .container::before {
