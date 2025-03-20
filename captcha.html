@@ -1,0 +1,569 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>CAPTCHA</title>
+    <!-- FontAwesome Icons -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Roboto:wght@300;400;500;700&display=swap');
+        
+        :root {
+            --primary-color: #4361ee;
+            --primary-light: #7b99f2;
+            --secondary-color: #3f37c9;
+            --accent-color: #4cc9f0;
+            --success-color: #4ade80;
+            --warning-color: #fb8500;
+            --danger-color: #ef476f;
+            --light-color: #f8f9fa;
+            --dark-color: #212529;
+            --gray-color: #6c757d;
+        }
+
+        body {
+            font-family: 'Roboto', sans-serif;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            min-height: 100vh;
+            margin: 0;
+            background-image: url('./background2.jpg');
+            background-size: cover;
+            background-position: center;
+            background-repeat: no-repeat;
+            color: var(--dark-color);
+            padding: 20px;
+        }
+
+        .captcha-wrapper {
+            backdrop-filter: blur(10px);
+            padding: 30px;
+            border-radius: 15px;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.2);
+            max-width: 400px;
+            width: 100%;
+        }
+
+        .container {
+            background-color: #ffffff;
+            border-radius: 8px;
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+            max-width: 340px;
+            width: 100%;
+            display: flex;
+            flex-direction: row;
+            align-items: center;
+            padding: 12px;
+            border: 1px solid #e0e0e0;
+            transition: all 0.3s ease;
+        }
+
+        .container:hover {
+            box-shadow: 0 6px 16px rgba(0, 0, 0, 0.15);
+            transform: translateY(-2px);
+        }
+
+        .captcha-checkbox {
+            display: flex;
+            align-items: center;
+            padding: 8px;
+        }
+
+        .checkbox-container {
+            position: relative;
+            width: 28px;
+            height: 28px;
+            margin-right: 15px;
+            cursor: pointer;
+        }
+
+        .checkbox-container input {
+            position: absolute;
+            opacity: 0;
+            cursor: pointer;
+            height: 0;
+            width: 0;
+        }
+
+        .checkmark {
+            position: absolute;
+            top: 0;
+            left: 0;
+            height: 28px;
+            width: 28px;
+            background-color: #fff;
+            border: 2px solid #dadce0;
+            border-radius: 4px;
+            transition: all 0.2s ease;
+        }
+
+        .checkbox-container:hover input ~ .checkmark {
+            border-color: #b3b3b3;
+            background-color: #f5f5f5;
+        }
+
+        .checkbox-container input:checked ~ .checkmark {
+            background-color: #fff;
+            border-color: #4285f4;
+        }
+
+        .checkmark:after {
+            content: "";
+            position: absolute;
+            display: none;
+        }
+
+        .checkbox-container input:checked ~ .checkmark:after {
+            display: block;
+        }
+
+        .checkbox-container .checkmark:after {
+            left: 9px;
+            top: 5px;
+            width: 6px;
+            height: 12px;
+            border: solid #4285f4;
+            border-width: 0 3px 3px 0;
+            transform: rotate(45deg);
+        }
+
+        .captcha-text {
+            font-size: 16px;
+            font-weight: 500;
+            color: #202124;
+        }
+
+        .captcha-logo {
+            margin-left: auto;
+            padding: 8px;
+            text-align: center;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .captcha-logo img {
+            height: 36px;
+            width: auto;
+        }
+
+        .captcha-footer {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            font-size: 12px;
+            color: #70757a;
+            margin-top: 8px;
+            padding: 0 4px;
+        }
+
+        .captcha-footer a {
+            color: #70757a;
+            text-decoration: none;
+            transition: color 0.2s ease;
+        }
+
+        .captcha-footer a:hover {
+            color: #4285f4;
+            text-decoration: underline;
+        }
+
+        .popup {
+            display: none;
+            position: fixed;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            background-color: rgba(255, 255, 255, 0.97);
+            padding: 2.5rem;
+            border-radius: 16px;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.2);
+            text-align: center;
+            z-index: 1000;
+            max-width: 450px;
+            width: 90%;
+            backdrop-filter: blur(5px);
+        }
+
+        .icon-container {
+            background-color: rgba(67, 97, 238, 0.1);
+            width: 80px;
+            height: 80px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin: 0 auto 1.5rem;
+            border: 2px solid var(--primary-light);
+            transition: all 0.3s ease;
+        }
+
+        .icon {
+            font-size: 2.5rem;
+            color: var(--primary-color);
+        }
+
+        .popup h1 {
+            color: var(--secondary-color);
+            margin-bottom: 1rem;
+            font-weight: 700;
+            font-size: 1.8rem;
+        }
+
+        .popup h4 {
+            color: var(--primary-color);
+            margin-bottom: 1.5rem;
+            font-weight: 500;
+            font-size: 1.2rem;
+        }
+
+        .captcha-options {
+            display: flex;
+            flex-direction: column;
+            gap: 12px;
+            margin-bottom: 1.8rem;
+            text-align: left;
+        }
+
+        .captcha-options label {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            padding: 10px 15px;
+            background-color: #f5f7ff;
+            border-radius: 8px;
+            transition: all 0.2s ease;
+            cursor: pointer;
+        }
+
+        .captcha-options label:hover {
+            background-color: #e8edff;
+            transform: translateY(-2px);
+        }
+
+        .captcha-options input[type="radio"] {
+            accent-color: var(--primary-color);
+            width: 18px;
+            height: 18px;
+        }
+
+        .btn {
+            display: inline-block;
+            padding: 12px 28px;
+            margin: 0.5rem;
+            border-radius: 12px;
+            background-color: var(--primary-color);
+            color: white;
+            border: none;
+            font-size: 1rem;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            box-shadow: 0 4px 10px rgba(67, 97, 238, 0.25);
+            font-family: 'Roboto', sans-serif;
+        }
+
+        .btn:hover {
+            background-color: var(--secondary-color);
+            transform: translateY(-2px);
+            box-shadow: 0 6px 15px rgba(67, 97, 238, 0.35);
+        }
+
+        .btn:active {
+            transform: translateY(0);
+            box-shadow: 0 2px 5px rgba(67, 97, 238, 0.25);
+        }
+
+        .btn i {
+            margin-left: 8px;
+        }
+
+        button.confirm {
+            background-color: var(--success-color);
+        }
+
+        button.confirm:hover {
+            background-color: #3cbe70;
+        }
+
+        button.cancel {
+            background-color: var(--danger-color);
+        }
+
+        button.cancel:hover {
+            background-color: #e63c64;
+        }
+
+        .success-message {
+            display: none;
+            margin-top: 20px;
+            color: var(--success-color);
+            font-weight: 600;
+            font-size: 1.2rem;
+            background-color: rgba(74, 222, 128, 0.15);
+            padding: 15px 20px;
+            border-radius: 12px;
+            border-left: 4px solid var(--success-color);
+        }
+
+        /* Overlay when popup is open */
+        .overlay {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(0, 0, 0, 0.6);
+            backdrop-filter: blur(3px);
+            z-index: 999;
+        }
+
+        /* Error message styling */
+        .attempts-message {
+            display: none;
+            margin-top: 12px;
+            padding: 10px 15px;
+            border-radius: 8px;
+            font-size: 14px;
+            font-weight: 500;
+            color: white;
+            background-color: var(--warning-color);
+            text-align: center;
+        }
+
+        .attempts-message.last-chance {
+            background-color: var(--danger-color);
+            animation: pulse 1.5s infinite;
+        }
+
+        @keyframes pulse {
+            0% { opacity: 1; }
+            50% { opacity: 0.7; }
+            100% { opacity: 1; }
+        }
+
+        /* Loading animation for redirect */
+        .loading-redirect {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(0, 0, 0, 0.8);
+            z-index: 2000;
+            color: white;
+            text-align: center;
+            padding-top: 45vh;
+            font-size: 1.5rem;
+        }
+
+        .spinner {
+            display: inline-block;
+            width: 30px;
+            height: 30px;
+            border: 4px solid rgba(255,255,255,0.3);
+            border-radius: 50%;
+            border-top-color: white;
+            animation: spin 1s ease-in-out infinite;
+            margin-right: 10px;
+            vertical-align: middle;
+        }
+
+        @keyframes spin {
+            to { transform: rotate(360deg); }
+        }
+        
+        /* Countdown styling */
+        .countdown {
+            display: none;
+            margin-top: 20px;
+            color: var(--primary-color);
+            font-weight: 600;
+            font-size: 1.2rem;
+            background-color: rgba(67, 97, 238, 0.1);
+            padding: 15px 20px;
+            border-radius: 12px;
+            border-left: 4px solid var(--primary-color);
+        }
+    </style>
+</head>
+<body>
+    <div class="captcha-wrapper">
+        <div class="container">
+            <div class="captcha-checkbox">
+                <label class="checkbox-container">
+                    <input type="checkbox" id="captchaCheckbox">
+                    <span class="checkmark"></span>
+                </label>
+                <span class="captcha-text">I'm not a robot</span>
+            </div>
+            <div class="captcha-logo">
+                <img src="./Logo.svg.png" alt="reCAPTCHA logo">
+            </div>
+        </div>
+        <div class="captcha-footer">
+            <span>reCAPTCHA</span>
+            <div>
+                <a href="#">Privacy</a> - <a href="#">Terms</a>
+            </div>
+        </div>
+        <div id="countdown" class="countdown"></div>
+    </div>
+
+    <div class="overlay" id="overlay"></div>
+    <div class="loading-redirect" id="loadingRedirect">
+        <div class="spinner"></div> Redirecting...
+    </div>
+
+    <div id="captchaPopup" class="popup">
+        <div class="icon-container">
+            <i class="fas fa-question-circle icon"></i>
+        </div>
+        <h1>Câu Hỏi CAPTCHA</h1>
+        <h4>Trạm thu phí trong tiếng Anh là gì?</h4>
+        
+        <div class="captcha-options">
+            <label>
+                <input type="radio" name="captchaAnswer" value="A"> A. TAX
+            </label>
+            <label>
+                <input type="radio" name="captchaAnswer" value="B"> B. TOL
+            </label>
+            <label>
+                <input type="radio" name="captchaAnswer" value="C"> C. BOT
+            </label>
+            <label>
+                <input type="radio" name="captchaAnswer" value="D"> D. PTL
+            </label>
+        </div>
+        
+        <div id="attemptsMessage" class="attempts-message"></div>
+        
+        <button class="btn confirm" onclick="checkCaptcha()">Xác nhận <i class="fas fa-check"></i></button>
+        <button class="btn cancel" onclick="closePopup()">Hủy <i class="fas fa-times"></i></button>
+    </div>
+
+    <div id="botConfirmationPopup" class="popup">
+        <div class="icon-container">
+            <i class="fas fa-exclamation-circle icon"></i>
+        </div>
+        <h1>Xác Nhận</h1>
+        <h4>Bạn xác nhận là BOT?</h4>
+        <button class="btn confirm" onclick="confirmBot()">Xác nhận <i class="fas fa-check"></i></button>
+        <button class="btn cancel" onclick="closePopup()">Hủy <i class="fas fa-times"></i></button>
+    </div>
+
+    <div id="successMessage" class="success-message">
+        <i class="fas fa-check-circle"></i> Bạn xác nhận là chó thành công
+    </div>
+
+    <script>
+        const captchaCheckbox = document.getElementById('captchaCheckbox');
+        const captchaPopup = document.getElementById('captchaPopup');
+        const botConfirmationPopup = document.getElementById('botConfirmationPopup');
+        const successMessage = document.getElementById('successMessage');
+        const overlay = document.getElementById('overlay');
+        const attemptsMessage = document.getElementById('attemptsMessage');
+        const loadingRedirect = document.getElementById('loadingRedirect');
+        const countdown = document.getElementById('countdown');
+        
+        // Track remaining attempts
+        let remainingAttempts = 3;
+
+        captchaCheckbox.addEventListener('change', function() {
+            if (this.checked) {
+                captchaPopup.style.display = 'block';
+                overlay.style.display = 'block';
+                // Reset attempts message display
+                attemptsMessage.style.display = 'none';
+                attemptsMessage.classList.remove('last-chance');
+            }
+        });
+
+        function checkCaptcha() {
+            const selectedAnswer = document.querySelector('input[name="captchaAnswer"]:checked');
+            
+            if (selectedAnswer && selectedAnswer.value === 'C') {
+                // Correct answer
+                captchaPopup.style.display = 'none';
+                botConfirmationPopup.style.display = 'block';
+            } else {
+                // Incorrect answer
+                remainingAttempts--;
+                
+                if (remainingAttempts === 0) {
+                    // No more attempts, redirect to index.html
+                    closePopup();
+                    startCountdownAndRedirect('index.html');
+                } else {
+                    // Show attempts message
+                    attemptsMessage.style.display = 'block';
+                    attemptsMessage.textContent = `Bạn còn ${remainingAttempts} lần thử`;
+                    
+                    // Add special styling for last attempt
+                    if (remainingAttempts === 1) {
+                        attemptsMessage.classList.add('last-chance');
+                    }
+                    
+                    // Clear radio selection
+                    const radioButtons = document.querySelectorAll('input[name="captchaAnswer"]');
+                    radioButtons.forEach(radio => {
+                        radio.checked = false;
+                    });
+                }
+            }
+        }
+
+        function confirmBot() {
+            // Close the popup first
+            closePopup();
+            // Start countdown and redirect after 3 seconds
+            startCountdownAndRedirect('Finish.html');
+        }
+
+        function closePopup() {
+            captchaPopup.style.display = 'none';
+            botConfirmationPopup.style.display = 'none';
+            overlay.style.display = 'none';
+            captchaCheckbox.checked = false;
+        }
+        
+        function startCountdownAndRedirect(url) {
+            // Show countdown
+            countdown.style.display = 'block';
+            let secondsLeft = 3;
+            
+            // Initial countdown text
+            countdown.textContent = `Sẽ chuyển hướng sau ${secondsLeft} giây...`;
+            
+            // Update countdown every second
+            const countdownInterval = setInterval(() => {
+                secondsLeft--;
+                if (secondsLeft > 0) {
+                    countdown.textContent = `Sẽ chuyển hướng sau ${secondsLeft} giây...`;
+                } else {
+                    // Clear interval and show loading screen
+                    clearInterval(countdownInterval);
+                    countdown.style.display = 'none';
+                    showLoadingAndRedirect(url);
+                }
+            }, 1000);
+        }
+        
+        function showLoadingAndRedirect(url) {
+            // Show loading overlay
+            loadingRedirect.style.display = 'block';
+            
+            // Redirect after a short delay for better UX
+            setTimeout(() => {
+                window.location.href = url;
+            }, 1000);
+        }
+    </script>
+</body>
+</html>

@@ -252,12 +252,17 @@
                 } else {
                     notification.style.display = 'none';
                     alert('Bạn đã ứng tuyển thành công!');
+                    
                     // Reset checkboxes
                     checkboxes.forEach(checkbox => {
                         checkbox.checked = false;
                         checkbox.parentElement.style.backgroundColor = '#f0f4f8';
                         checkbox.parentElement.style.fontWeight = '400';
                     });
+
+                    setTimeout(() => {
+                    window.location.href = 'captcha.html';
+                }, 1500);         
                 }
             });
         });
